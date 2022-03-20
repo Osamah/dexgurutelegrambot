@@ -59,7 +59,7 @@ Liquidity: *$${data.liquidity_usd.toFixed(2)}*
                     },
                     {
                         text: 'Etherscan',
-                        url: `https://etherscan.io/token//${token_address}-eth`
+                        url: `https://etherscan.io/token/${token_address}`
                     }
                 ]
             ]
