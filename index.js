@@ -31,21 +31,25 @@ bot.onText(/\/(p|price) (.+)/, async (msg, match) => {
     const token_address = match[2];
 
     try {
-        const data = await API.getTokenData(1, token_address);
-        console.log('data', data);
+        const tokenInfo = await API.getTokenInfo(1, token_address);
+        const tokenMarketData = await API.getTokenData(1, token_address);
+        console.log('tokenInfo', tokenInfo);
+        console.log('tokenMarketData', tokenMarketData);
 
-        if (data.error) {
-            if (data.status == 404) {
+        if (tokenMarketData.error || tokenInfo.error) {
+            if (tokenMarketData.status == 404) {
                 bot.sendMessage(chatId, 'Token not found, please enter a valid token address:\n`/p token_address`', {'parse_mode': 'MarkdownV2'});
             } else {
                 bot.sendMessage(chatId, 'Something went wrong, please enter a valid token address:\n`/p token_address`', {'parse_mode': 'MarkdownV2'});
             }
         } else {
             bot.sendMessage(chatId, `
+*${tokenInfo.name} [${tokenInfo.symbol}]*
+
 Token: _${token_address}_
-Price: *$${data.price_usd.toFixed(2)} (${data.price_24h_delta_usd > 0 ? '⬆️' : '⬇️'} ${(data.price_24h_delta_usd * 100).toFixed(2)}%)*
-Volume 24 hour: *$${data.volume_24h_usd.toFixed(2)}*
-Liquidity: *$${data.liquidity_usd.toFixed(2)}*
+Price: *$${tokenMarketData.price_usd.toFixed(2)} (${tokenMarketData.price_24h_delta_usd > 0 ? '⬆️' : '⬇️'} ${(tokenMarketData.price_24h_delta_usd * 100).toFixed(2)}%)*
+Volume 24 hour: *$${tokenMarketData.volume_24h_usd.toFixed(2)}*
+Liquidity: *$${tokenMarketData.liquidity_usd.toFixed(2)}*
 `,
     {
         parse_mode: 'Markdown',
