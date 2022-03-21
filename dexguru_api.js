@@ -1,5 +1,5 @@
 require('isomorphic-fetch');
-require('dotenv');
+require('dotenv').config();
 
 const API_KEY = process.env.DEXGURU_API_KEY || '';
 const BASEURL = 'https://api.dev.dex.guru/v1/';
