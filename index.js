@@ -46,7 +46,7 @@ bot.onText(/\/(p|price) (.+)/, async (msg, match) => {
             bot.sendMessage(chatId, `
 *${tokenInfo.name} [${tokenInfo.symbol}]*
 
-Token: _${token_address}_
+Token address: \`${token_address}\`
 Price: *$${tokenMarketData.price_usd.toFixed(2)} (${tokenMarketData.price_24h_delta_usd > 0 ? '⬆️' : '⬇️'} ${(tokenMarketData.price_24h_delta_usd * 100).toFixed(2)}%)*
 Volume 24 hour: *$${tokenMarketData.volume_24h_usd.toFixed(2)}*
 Liquidity: *$${tokenMarketData.liquidity_usd.toFixed(2)}*
